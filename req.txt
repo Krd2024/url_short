@@ -1,2 +1,4 @@
 django
 hashids
+requests 
+beautifulsoup4

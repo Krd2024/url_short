@@ -1,0 +1,21 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }}</title>
+  </head>
+  <body>
+    <h2>Содержимое страницы:</h2>
+    {{ page_content }}
+    <h1>{{ error }} ---</h1>
+
+    {% if page_content %}
+      <div>
+        <h2>Содержимое страницы:</h2>
+        <div>{{ page_content|safe }}</div>
+      </div>
+    {% else %}
+      <p>{{ error }}</p>
+    {% endif %}
+  </body>
+</html>
