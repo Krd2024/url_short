@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.forms import ValidationError
 from hashids import Hashids
 from django.core.validators import URLValidator
+import hashlib
 
 
 def custom_url_validator(value):
@@ -29,7 +30,7 @@ class Handler(models.Model):
         parsed_url = urlparse(self.url)
         path = parsed_url.path
         hashids = Hashids(min_length=8, salt="your_salt_here")
-        return hashids.encode_hex(path.encode().hex())
+        return hashids.encode_hex(path.encode().hex())[:12]
 
     def new_url_generator(self):
         """Сформировать новый Url"""
