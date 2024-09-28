@@ -15,7 +15,9 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 
-from url.parser import my_view
+from url.parser import fetch_and_parse_page
+
+# from url.parser import my_view
 
 
 def custom_url_validator(value):
@@ -36,7 +38,7 @@ def custom_url_validator(value):
 @csrf_exempt  # Используйте только для тестирования. В реальном приложении используйте CSRF-токены.
 def shorten_url(request):
     if request.method == "POST":
-        my_view(request)
+        # my_view(request)
         try:
             data = json.loads(request.body)
             url = data.get("url")
@@ -72,7 +74,7 @@ def url_short_get(request):
     """Проверить и перейти по короткому Url"""
 
     if request.method == "POST":
-        my_view(request)
+        # my_view(request)
         try:
             data = json.loads(request.body)
             short_url = data.get("shortUrl_go")
@@ -82,6 +84,7 @@ def url_short_get(request):
             try:
                 real_url = Handler.objects.get(token=token_url[1])
                 print(f"{real_url.url} - полный Url для {short_url}")
+                # fetch_and_parse_page(request, real_url.url)
                 return JsonResponse(
                     {
                         "url": real_url.url,

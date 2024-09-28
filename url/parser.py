@@ -2,43 +2,41 @@ from django.shortcuts import render
 import requests
 from bs4 import BeautifulSoup
 
-# URL страницы, которую хотите спарсить
-import requests
-from bs4 import BeautifulSoup
 
+def fetch_and_parse_page(request, url=None, **kwargs):
+    url = "https://google.com"
 
-def my_view(request):
-    return render(request, "index_2.html", {"error": "Ошибка загрузки страницы."})
+    # Получаем HTML страницы
+    response = requests.get(url)
 
+    if response.status_code == 200:
+        # Парсим HTML
+        soup = BeautifulSoup(response.text, "html.parser")
 
-# print(request)
-# url = "https://example.com"
+        # Собираем стили из <link> и <style> тегов
+        styles = ""
 
-# # Получаем страницу
-# response = requests.get(url)
+        # Парсим все <link> теги для внешних CSS
+        for link in soup.find_all("link", {"rel": "stylesheet"}):
+            css_url = link.get("href")
+            if css_url:
+                # Загружаем внешний CSS файл
+                if css_url.startswith("http"):
+                    css_response = requests.get(css_url)
+                else:
+                    # Если относительный путь, то добавляем домен
+                    css_response = requests.get(url + css_url)
 
-# # Проверяем, успешен ли запрос
-# if response.status_code == 200:
-#     # Парсим HTML
-#     soup = BeautifulSoup(response.text, "html.parser")
-#     print("RESPONSE = 1")
+                if css_response.status_code == 200:
+                    styles += css_response.text
 
-#     # Можно извлечь данные из soup, например, заголовок
-#     title = soup.title.string if soup.title else "Без заголовка"
-#     print("RESPONSE = 2")
+        # Собираем inline-стили
+        for style in soup.find_all("style"):
+            styles += style.get_text()
 
-#     # Передаем данные в шаблон
+        # Передаем HTML и стили в шаблон
+        return render(
+            request, "parser.html", {"html_content": soup.prettify(), "styles": styles}
+        )
 
-#     x = render(
-#         request,
-#         "index_2.html",
-#         {
-#             "title": title,
-#             "page_content": soup,
-#             "test": 2222222222222222,
-#         },
-#     )
-#     print(x, "<-------------------", soup)
-#     return x
-# else:
-# return render(request, "index_2.html", {"error": "Ошибка загрузки страницы."})
+    return render(request, "parser.html", {"error": "Ошибка загрузки страницы."})

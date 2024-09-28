@@ -41,6 +41,7 @@
       <input type="text" id="shortUrlInput" placeholder="Введите короткий URL" />
     </form>
     <a href="#"><button onclick="getUrl()">Перейти</button></a>
+    {% comment %} <a href="{% url 'new_umy_viewrl_db' %}"><button>Парсер</button></a> {% endcomment %}
   </body>
   <script>
     function clearFields() {
@@ -94,7 +95,7 @@
       // Отправка данных на сервер
       await sendData(url)
     })
-    
+    //
     async function sendData(url) {
       try {
         const response = await fetch('/url_short/', {
