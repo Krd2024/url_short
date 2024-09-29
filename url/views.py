@@ -21,7 +21,6 @@ from url.parser import fetch_and_parse_page
 
 
 def custom_url_validator(value):
-    print(value, "< ------ value")
     if not value.startswith("http://") and not value.startswith("https://"):
         print("URL должен начинаться с http:// или https://")
         return False
@@ -35,18 +34,22 @@ def custom_url_validator(value):
         print("Всё нормально")
 
 
-@csrf_exempt  # Используйте только для тестирования. В реальном приложении используйте CSRF-токены.
+@csrf_exempt
 def shorten_url(request):
+    """Запись в БД полного Url и возврат сокращенного"""
+
     if request.method == "POST":
         # my_view(request)
         try:
             data = json.loads(request.body)
             url = data.get("url")
+            url_descrip = data.get("urlDescrip")
+            print(url_descrip)
 
             if not custom_url_validator(url):
                 return JsonResponse({"error": "Неверный формат данных"}, status=400)
 
-            new_url_db = Handler(url=url)
+            new_url_db = Handler(url=url, discription=url_descrip)
             new_url_db.save()
 
             return JsonResponse(

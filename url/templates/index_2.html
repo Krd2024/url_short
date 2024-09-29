@@ -75,7 +75,9 @@
         color: #757575;
       }
       hr {
-        width: 150px;
+        width: 5px;
+        height: 3px;
+        background-color: #4caf50 !important;
       }
     </style>
   </head>
@@ -83,14 +85,16 @@
     <table>
       <thead>
         <tr>
-          <th>Список коротких URL</th>
+          <th>Короткий URL / Начальный Url / Описание</th>
         </tr>
       </thead>
       <tbody>
         {% for url in my_list %}
           <tr>
             <td>
-              {{ url.new_url }} <br /><hr />{{ url.url }}
+              <li>{{ url.new_url }}</li> <br />
+              <li>{{ url.url }}</li><br />
+              <li>{{ url.discription }}</li>
             </td>
           </tr>
         {% empty %}

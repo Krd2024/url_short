@@ -20,9 +20,8 @@ class User(AbstractUser): ...
 class Handler(models.Model):
     url = models.URLField(unique=True)
     token = models.CharField(max_length=20)
-    new_url = models.CharField(
-        max_length=255, blank=True, null=True
-    )  # Поле для сохранения нового URL
+    new_url = models.CharField(max_length=255, blank=True, null=True)
+    discription = models.CharField(max_length=200, blank=True)
 
     def generate_token(self):
         """Создать токен для Url"""

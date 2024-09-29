@@ -33,6 +33,7 @@
     <form id="urlForm">
       <label for="urlInput">Введите URL для сокращения:</label>
       <input type="url" id="urlInput" placeholder="https://example.com" />
+      <input id="urlInputDescrip" placeholder="Описание" />
 
       <button type="submit">Сократить</button>
       <button type="button" class="clear" onclick="clearFields()">Очистить</button>
@@ -91,19 +92,20 @@
     document.getElementById('urlForm').addEventListener('submit', async function (event) {
       event.preventDefault()
       const url = document.getElementById('urlInput').value
+      const urlDescrip = document.getElementById('urlInputDescrip').value
     
       // Отправка данных на сервер
-      await sendData(url)
+      await sendData(url, urlDescrip)
     })
     //
-    async function sendData(url) {
+    async function sendData(url, urlDescrip) {
       try {
         const response = await fetch('/url_short/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ url })
+          body: JSON.stringify({ url, urlDescrip })
         })
     
         if (response.ok) {
