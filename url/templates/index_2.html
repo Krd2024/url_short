@@ -17,7 +17,7 @@
       td {
         padding: 10px;
         text-align: left;
-        border: 1px solid #ddd;
+        border: 2px solid #ddd;
       }
       
       th {
@@ -74,6 +74,9 @@
         font-size: 18px;
         color: #757575;
       }
+      hr {
+        width: 150px;
+      }
     </style>
   </head>
   <body>
@@ -86,7 +89,9 @@
       <tbody>
         {% for url in my_list %}
           <tr>
-            <td>{{ url.new_url }}</td>
+            <td>
+              {{ url.new_url }} <br /><hr />{{ url.url }}
+            </td>
           </tr>
         {% empty %}
           <tr>
