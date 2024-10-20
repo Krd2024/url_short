@@ -1,42 +1,24 @@
-from pyexpat.errors import messages
-from urllib.parse import urlparse
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 from django.db import IntegrityError
 from django.shortcuts import render
-from hashids import Hashids
-
-from url import config
 from url.models import Handler
-
-from django.core.validators import URLValidator
-
-from django.core.exceptions import ValidationError
-
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 import json
-
-from url.parser import fetch_and_parse_page
-
-# from url.parser import my_view
 
 
 def custom_url_validator(value):
     if not value.startswith("http://") and not value.startswith("https://"):
         print("URL должен начинаться с http:// или https://")
         return False
-        #     raise ValidationError("URL должен начинаться с http:// или https://")
-        # elif not value.endswith(config.LIST):
-        #     return False
-        #     raise ValidationError("URL должен заканчиваться по-другому")
 
     else:
-        return True
         print("Всё нормально")
+        return True
 
 
 @csrf_exempt
 def shorten_url(request):
-    """Запись в БД полного Url и возврат сокращенного"""
+    """Запись в БД полный Url и возврат сокращенного"""
 
     if request.method == "POST":
         # my_view(request)
@@ -94,7 +76,7 @@ def url_short_get(request):
                     }
                 )
             except Handler.DoesNotExist:
-                print(f"Нет соответствующей записи")
+                print("Нет соответствующей записи")
         except Exception as e:
             print(e)
 

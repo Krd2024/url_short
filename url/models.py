@@ -1,20 +1,24 @@
-from urllib.parse import urlparse
-from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.forms import ValidationError
+from urllib.parse import urlparse
+from django.db import models
 from hashids import Hashids
-from django.core.validators import URLValidator
-import hashlib
+
+# from django.core.validators import URLValidator
+# import hashlib
 
 
 def custom_url_validator(value):
+    """Валидатор URL"""
+
     if not value.startswith("http://") and not value.startswith("https://"):
         print("URL должен начинаться с http:// или https://")
         raise ValidationError("URL должен начинаться с http:// или https://")
 
 
 # Create your models here.
-class User(AbstractUser): ...
+class User(AbstractUser):
+    pass
 
 
 class Handler(models.Model):
@@ -39,8 +43,8 @@ class Handler(models.Model):
         return f"{domain}/{self.token}"
 
     def save(self, *args, **kwargs):
+        """Генерируем токен"""
 
-        # Генерируем токен только если его нет
         if not self.token:
             self.token = self.generate_token()
         self.new_url = self.new_url_generator()
