@@ -64,7 +64,11 @@ print(get_random_secret_key())
 ```python
 SECRET_KEY = см. выше
 ```
-5.Запуск
+5.Миграции
+```bash
+python manage.py migrate
+```
+6.Запуск
 ```bash
 python manage.py runserver
 ```
