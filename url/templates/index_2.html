@@ -79,6 +79,12 @@
         height: 3px;
         background-color: #4caf50 !important;
       }
+      .button-delete {
+        padding: 4px 8px;
+        font-size: 12px;
+        line-height: 1;
+        border-radius: 4px;
+      }
     </style>
   </head>
   <body>
@@ -90,11 +96,12 @@
       </thead>
       <tbody>
         {% for url in my_list %}
-          <tr>
+          <tr data-id="{{ url.id }}">
             <td>
               <li>{{ url.new_url }}</li> <br />
               <li>{{ url.url }}</li><br />
               <li>{{ url.discription }}</li>
+              <button class="button-delete" onclick="deleteRow(this,{{ url.id }})">Удалить</button>
             </td>
           </tr>
         {% empty %}
@@ -115,4 +122,43 @@
       {% endif %}
     </div>
   </body>
+  <script>
+    async function deleteRow(button, id) {
+      console.log(id)
+      const deleteUrl = `/api/urls/${id}/`
+    
+      try {
+        // Отправляем запрос DELETE на сервер
+        const response = await fetch(deleteUrl, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCSRFToken() // Подставьте CSRF-токен, если требуется
+          }
+        })
+    
+        // Проверяем, успешно ли выполнен запрос
+        if (response.ok) {
+          // Удаляем строку из DOM при успешном ответе
+          const row = button.closest('tr')
+          row.remove()
+        } else {
+          console.error('Ошибка при удалении: ', response.statusText)
+          alert('Не удалось удалить URL.')
+        }
+      } catch (error) {
+        console.error('Ошибка сети или сервера:', error)
+        alert('Произошла ошибка при удалении URL.')
+      }
+    }
+    
+    // Функция для получения CSRF-токена из куки (если требуется)
+    function getCSRFToken() {
+      const cookieValue = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('csrftoken='))
+        ?.split('=')[1]
+      return cookieValue || ''
+    }
+  </script>
 </html>

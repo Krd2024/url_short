@@ -1,7 +1,7 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.db import IntegrityError
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from url.models import Handler
 import json
 
@@ -85,6 +85,18 @@ def url_short_get(request):
         #     return JsonResponse({"error": "Неверный формат данных"}, status=400)
 
     return JsonResponse({"error": "Нет соответствующей записи"}, status=405)
+
+
+def url_delete(request, id):
+    if request.method in ["POST", "DELETE"]:
+        print(id, "< ---------")
+        url_instance = get_object_or_404(Handler, id=id)
+        url_instance.delete()
+        return JsonResponse({"success": True, "message": "URL успешно удалён"})
+
+    return JsonResponse(
+        {"success": False, "message": "Неподдерживаемый метод запроса"}, status=405
+    )
 
 
 # def create(request):
