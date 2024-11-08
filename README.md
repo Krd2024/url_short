@@ -1,6 +1,7 @@
 [![Lint](https://github.com/Krd2024/url_short/actions/workflows/lint.yml/badge.svg)](https://github.com/Krd2024/url_short/actions/workflows/lint.yml)
 # url_short
 
+![2024-11-08_15-19-21](https://github.com/user-attachments/assets/b25061de-54a8-4cff-989f-46815079006b)
 
 ## Описание проекта
 
