@@ -50,3 +50,36 @@ URL Shortener — это веб-приложение для сокращения
 ## Запуск проекта
 
 
+1.Склонируйте репозиторий:
+   ```bash
+git clone https://github.com/Krd2024/url_short.git
+```
+2.Создание виртуального окружения
+```bash
+python -m venv .venv
+```
+3.Активация виртуального окружения
+```bash
+.venv\Scripts\activate
+```
+4.Установка зависимостей проекта
+```bash
+pip install -r req.txt
+```
+**Сгенерировать SECRET_KEY в Django**
+```python
+from django.core.management.utils import get_random_secret_key
+print(get_random_secret_key())
+```
+**Сосдать файл .env**
+Добавьте соответствующие значения в .env файл:
+```python
+SECRET_KEY = см. выше
+```
+5.Запуск
+```bash
+python manage.py runserver
+```
+
+
+
