@@ -1,3 +1,4 @@
-![Lint](https://github.com/ВАШЕ_ИМЯ/ВАШ_РЕПОЗИТОРИЙ/workflows/Lint/badge.svg)
+![Lint Status](https://github.com/username/my-repo/workflows/Lint/badge.svg)
+![Build Status](https://github.com/username/my-repo/workflows/Build/badge.svg)
 # url_short
  
