@@ -59,7 +59,7 @@ pip install -r req.txt
 from django.core.management.utils import get_random_secret_key
 print(get_random_secret_key())
 ```
-**Сосдать файл .env**
+**Создать файл .env**
 Добавьте соответствующие значения в .env файл:
 ```python
 SECRET_KEY = см. выше
