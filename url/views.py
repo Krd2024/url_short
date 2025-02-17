@@ -99,31 +99,6 @@ def url_delete(request, id):
     )
 
 
-# def create(request):
-
-#     x = "http://aaaaa.ru/111111"
-
-#     new_url_db = Handler(url=x)
-#     new_url_db.save()
-#     print(new_url_db, "< ----result new url")
-#     parsed_url = urlparse(x)
-#     domain = parsed_url.netloc
-#     print(domain, "< ---- domain is created")
-
-#     # path = parsed_url.path
-
-#     hashids = Hashids(min_length=8, salt="your_salt_here")
-
-#     # Кодирование
-#     # original_string = url
-#     # hashed_id = hashids.encode_hex(original_string.encode().hex())
-#     # print(f"Hashed: {hashed_id}")
-
-#     # Декодирование
-#     # decoded = bytes.fromhex(hashids.decode_hex(hashed_id)).decode()
-#     # print(f"Decoded: {decoded}")
-
-
 def index(request, url=None):
     print(url)
     # create(url)

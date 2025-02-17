@@ -1,5 +1,4 @@
 from django.urls import path
-from url.parser import fetch_and_parse_page
 from .views import index, shorten_url, url_delete, url_short_get
 
 urlpatterns = [
