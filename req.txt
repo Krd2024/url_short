@@ -1,5 +1,4 @@
 django
 hashids
-requests 
-beautifulsoup4
 python-decouple
+loguru
