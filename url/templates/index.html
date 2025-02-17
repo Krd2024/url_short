@@ -7,6 +7,7 @@
       padding: 20px;
       border: 1px solid #ccc;
       max-width: 400px;
+      height: fit-content;
     }
     input {
       width: 100%;
@@ -33,16 +34,17 @@
     <form id="urlForm">
       <label for="urlInput">Введите URL для сокращения:</label>
       <input type="url" id="urlInput" placeholder="https://example.com" />
+      <input id="urlCastom" placeholder="Введите свой URL без префикса" />
       <input id="urlInputDescrip" placeholder="Описание" />
-      <button type="submit">Сократить</button>
 
+      <button type="submit">Сократить</button>
       <button type="button" class="clear" onclick="clearFields()">Очистить</button>
 
-      {% comment %} <br /><label for="shortUrlInput" id="forNewUrl">Введите короткий URL:</label> {% endcomment %}
+      {% comment %} <a href="#"><button onclick="getUrl()">Перейти</button></a> {% endcomment %}
+      <hr />
       <input type="text" id="shortUrlInput" placeholder="Введите короткий URL" />
     </form>
     <a href="#"><button onclick="getUrl()">Перейти</button></a>
-    {% comment %} <a href="{% url 'new_umy_viewrl_db' %}"><button>Парсер</button></a> {% endcomment %}
   </body>
   <script>
     function clearFields() {
@@ -77,12 +79,11 @@
     
           if (response.status == 405) {
             shortUrlForNew.value = errorResult.error
+          } else {
+            shortUrlForNew.value = errorResult.error
           }
-          //else {
-          //shortUrlForNew.value = errorResult.new_url
-          //}
     
-          console.log('Ошибка от сервера: Повторный запрос', errorResult)
+          console.log('Ошибка от сервера:', errorResult)
         }
       } catch (error) {
         console.error('Ошибка сети:', error)
@@ -93,19 +94,21 @@
       event.preventDefault()
       const url = document.getElementById('urlInput').value
       const urlDescrip = document.getElementById('urlInputDescrip').value
+      const urlCastom = document.getElementById('urlCastom').value
     
+      console.log(urlCastom)
       // Отправка данных на сервер
-      await sendData(url, urlDescrip)
+      await sendData(url, urlCastom, urlDescrip)
     })
     //
-    async function sendData(url, urlDescrip) {
+    async function sendData(url, urlCastom, urlDescrip) {
       try {
         const response = await fetch('/url_short/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ url, urlDescrip })
+          body: JSON.stringify({ url, urlCastom, urlDescrip })
         })
     
         if (response.ok) {

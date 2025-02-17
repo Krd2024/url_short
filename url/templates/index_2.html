@@ -98,6 +98,9 @@
         {% for url in my_list %}
           <tr data-id="{{ url.id }}">
             <td>
+              {% if url.castom_url %}
+                <li>{{ url.castom_url }}</li> <br />
+              {% endif %}
               <li>{{ url.new_url }}</li> <br />
               <li>{{ url.url }}</li><br />
               <li>{{ url.discription }}</li>

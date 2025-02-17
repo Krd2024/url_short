@@ -3,6 +3,7 @@ from django.forms import ValidationError
 from urllib.parse import urlparse
 from django.db import models
 from hashids import Hashids
+from loguru import logger
 
 # from django.core.validators import URLValidator
 # import hashlib
@@ -24,7 +25,8 @@ class User(AbstractUser):
 class Handler(models.Model):
     url = models.URLField(unique=True)
     token = models.CharField(max_length=20)
-    new_url = models.CharField(max_length=255, blank=True, null=True)
+    new_url = models.CharField(max_length=50, blank=True, null=True)
+    castom_url = models.CharField(max_length=50, blank=True, null=True)
     discription = models.CharField(max_length=200, blank=True)
 
     def generate_token(self):
@@ -39,8 +41,8 @@ class Handler(models.Model):
         """Сформировать новый Url"""
 
         domain = urlparse(self.url).netloc
-        print(domain, "< ---- domain")
-        return f"{domain}/{self.token}"
+        logger.debug(domain)
+        return f"https://{domain}/{self.token}"
 
     def save(self, *args, **kwargs):
         """Генерируем токен"""
