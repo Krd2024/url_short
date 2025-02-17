@@ -41,7 +41,9 @@ def shorten_url(request):
                     )
                 else:
                     new_url_db = Handler(
-                        url=url, castom_url=url_castom, discription=url_descrip
+                        url=url,
+                        castom_url=f"https://{url_castom}",
+                        discription=url_descrip,
                     )
                     new_url_db.save()
                     new_url = "http://" + new_url_db.castom_url
@@ -104,15 +106,16 @@ def url_short_get(request):
                     }
                 )
             except Handler.DoesNotExist:
-                print("Нет соответствующей записи")
+                logger.error("Нет соответствующей записи")
+                return JsonResponse({"error": "Нет соответствующей записи"}, status=404)
 
         except json.JSONDecodeError:
-            print("error: Неверный формат данных")
+            logger.error("Неверный формат данных")
             return JsonResponse({"error": "Неверный формат данных"}, status=400)
         except Exception as e:
-            print(e)
+            logger.error(e)
 
-        return JsonResponse({"error": str(e)}, status=405)
+            return JsonResponse({"error": "Введите не кастомный URL"}, status=405)
 
 
 def url_delete(request, id):
