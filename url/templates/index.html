@@ -34,15 +34,14 @@
     <form id="urlForm">
       <label for="urlInput">Введите URL для сокращения:</label>
       <input type="url" id="urlInput" placeholder="https://example.com" />
-      <input id="urlCastom" placeholder="Введите свой URL без префикса" />
+      <input id="urlCastom" placeholder="Желаемый URL без префикса" />
       <input id="urlInputDescrip" placeholder="Описание" />
 
       <button type="submit">Сократить</button>
       <button type="button" class="clear" onclick="clearFields()">Очистить</button>
 
-      {% comment %} <a href="#"><button onclick="getUrl()">Перейти</button></a> {% endcomment %}
       <hr />
-      <input type="text" id="shortUrlInput" placeholder="Введите короткий URL" />
+      <input type="text" id="shortUrlInput" placeholder="Введите свой URL" />
     </form>
     <a href="#"><button onclick="getUrl()">Перейти</button></a>
   </body>
@@ -54,7 +53,8 @@
     
     async function getUrl() {
       const shortUrl_go = document.getElementById('shortUrlInput').value
-      shortUrl = 'https://' + shortUrl_go
+      shortUrl = shortUrl_go
+      //shortUrl = 'https://' + shortUrl_go
       console.log(shortUrl)
     
       // Переходим по URL
@@ -72,6 +72,7 @@
         if (response.ok) {
           //const shortUrlForNew = document.getElementById('shortUrlInput')
           const result = await response.json()
+    
           window.open(result.url, '_blank')
         } else {
           const errorResult = await response.json() // Получаем результат ошибки
@@ -124,10 +125,9 @@
           if (response.status == 405) {
           } else if (response.status == 400) {
             shortUrlForNew.value = errorResult.error
+          } else {
+            shortUrlForNew.value = new_url
           }
-          //else {
-          //shortUrlForNew.value = errorResult.new_url
-          //}
     
           console.log('Ошибка от сервера: Повторный запрос', errorResult)
         }

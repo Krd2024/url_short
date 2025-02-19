@@ -3,7 +3,10 @@ from django.contrib import messages
 
 
 def my_list_urls(request):
-    """Получить все короткие Url"""
+    """
+    Получить все короткие Url
+    Глобальная видимость контекста
+    """
 
     try:
         my_list = Handler.objects.all()

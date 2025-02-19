@@ -91,18 +91,18 @@
     <table>
       <thead>
         <tr>
-          <th>Короткий URL / Начальный Url / Описание</th>
+          <th>Начальный / Кастомный / Короткий / Описание</th>
         </tr>
       </thead>
       <tbody>
         {% for url in my_list %}
           <tr data-id="{{ url.id }}">
             <td>
+              <li>{{ url.url }}</li><br />
               {% if url.castom_url %}
-                <li>{{ url.castom_url }} ( В разработке )</li> <br />
+                <li>{{ url.castom_url }}</li> <br />
               {% endif %}
               <li>{{ url.new_url }}</li> <br />
-              <li>{{ url.url }}</li><br />
               <li>{{ url.discription }}</li>
               <button class="button-delete" onclick="deleteRow(this,{{ url.id }})">Удалить</button>
             </td>
